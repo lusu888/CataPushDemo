@@ -1,0 +1,59 @@
+
+plugins {
+    id 'com.android.application'
+}
+apply plugin: 'com.huawei.agconnect'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'Zz518114'
+            storeFile file('ZhangTest.jks')
+            storePassword 'Zz518114'
+        }
+    }
+
+    defaultConfig {
+        applicationId "it.hw.catapushdemo"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true // Add this line 這個沒有寫
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //implementation 'com.huawei.hms:push:5.0.4.302'//這個不要加
+    implementation('com.catapush.catapush-android-sdk:hms:10.2.12')
+    implementation "androidx.multidex:multidex:2.0.1"//這個沒有寫
+
+}

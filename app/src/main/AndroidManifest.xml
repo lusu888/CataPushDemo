@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="it.hw.catapushdemo">
+    <permission
+        android:name="${applicationId}.permission.CATAPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <application
+        android:name=".CataPushDemo"
+
+
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CataPushDemo">
+        <receiver
+            android:name=".MyReceiver"
+            android:permission="${applicationId}.permission.CATAPUSH_MESSAGE">
+            <intent-filter>
+                <action android:name="com.catapush.library.action.MESSAGE_RECEIVED" />
+                <action android:name="com.catapush.library.action.MESSAGE_OPENED" />
+                <action android:name="com.catapush.library.action.MESSAGE_SENT" />
+                <action android:name="com.catapush.library.action.MESSAGE_SENT_CONFIRMED" />
+                <action android:name="com.catapush.library.action.NOTIFICATION_CLICKED" />
+                <action android:name="com.catapush.library.action.RELOGIN_NOTIFICATION_CLICKED" />
+                <action android:name="com.catapush.library.action.INVALID_LIBRARY" />
+                <action android:name="com.catapush.library.action.CONNECTING" />
+                <action android:name="com.catapush.library.action.CONNECTED" />
+                <action android:name="com.catapush.library.action.DISCONNECTED" />
+                <action android:name="com.catapush.library.action.NETWORK_ERROR" />
+                <action android:name="com.catapush.library.action.PUSH_SERVICE_ERROR" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="com.catapush.library.APP_KEY"
+            android:value="ec7cba74ad0cbf8baa001c6fe175d716" />
+    </application>
+
+</manifest>
