@@ -33,12 +33,12 @@ import java.util.Collections;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
  ```
-+ in The Application Name Class, change code Boolean to Object like this
+## in The Application Name Class, change code Boolean to Object like this
 ```Java
 public void success(Object response) {
 ```
 
-+ in App/build.gradle add this in dependencies
+### in App/build.gradle add this in dependencies
 ```Java
 implementation "androidx.multidex:multidex:2.0.1"//這個沒有寫
 ```
