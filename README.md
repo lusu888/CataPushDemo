@@ -42,30 +42,25 @@ public void success(Object response) {
 ```Java
 implementation "androidx.multidex:multidex:2.0.1"//這個沒有寫
 ```
+-------------------------------------------------
+*******************************************
+-------------------------------------------------
 
-
-
-**Notification with action button example**
-
- 
-
++ Notification with action button example
 The Catapush APIs and the client Catapush Android SDK "automatic" notifications doesn't support notification actions explicitly but, when the user implements their own "manual" Android notification publishing, they can provide the necessary metadata in our messaging API **optionalData** field and then using it client-side to add the actions to the notification.
 
- 
+Send a message with this **optionalData** field value using the Catapush messages API:
 
-+ Send a message with this **optionalData** field value using the Catapush messages API:
-
-  ````bash
-  curl --request POST \
+```bash
+curl --request POST \
    --url https://api.catapush.com/1/messages \
    --header 'accept: application/json' \
    --header 'authorization: Bearer ACCESS_TOKEN' \
    --header 'content-type: application/json' \
    --data '{"mobileAppId":0,"text":"action test", "optionalData": {"buttonLabel": "Tap me", "buttonAction": "com.example.app.INTENT_ACTION_NOTIFICATION_BUTTON"},"recipients":[{"identifier":"johndoe"}]}'
   
-  ````
-
-  (you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
+ ```
+(you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
 
  
 
@@ -116,7 +111,7 @@ This will be the result:
 
  
 
-**Notification with image attachment example**
++ **Notification with image attachment example**
 
 The Catapush APIs lets the customer send images as attachments to their messages.When an image is attached to a message, our backend automatically generates a thumbnail that gets delivered to the client SDK in the message itself.
 
