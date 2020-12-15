@@ -86,27 +86,24 @@ And in your CatapushReceive.onMessageReceived(...) callback, add the following c
 @Override
 
 public void onMessageReceived(@NonNull CatapushMessage message, @NonNull Context context) {
-    Intent buttonIntent = new Intent(message.data().get("buttonAction"));
+    Intent buttonIntent = new Intent(msg.data().get("buttonAction"));
+        PendingIntent buttonPendingIntent = PendingIntent
+                .getActivity(context, 0, buttonIntent, PendingIntent.FLAG_ONE_SHOT);
 
-    PendingIntent buttonPendingIntent = PendingIntent
-            .getActivity(context, 0, buttonIntent, PendingIntent.FLAG_ONE_SHOT);
+        Notification notification = new NotificationCompat.Builder(context, context.getResources().getString(R.string.catapush_notification_channel_id))
+                .setSmallIcon(R.drawable.ic_stat_notify_default)
+                .setContentTitle("Notification button example")
+                .setContentText(msg.previewText())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(msg.body()))
+                .addAction(new NotificationCompat.Action(
+                        R.drawable.upsdk_third_download_bg,
+                        msg.data().get("buttonLabel"),
+                        buttonPendingIntent
+                ))
+                .build();
 
-
-
-    Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_stat_notify_default)
-            .setContentTitle("Notification button example")
-            .setContentText(message.previewText())
-            .setStyle(new NotificationCompat.BigTextStyle().bigText(message.body()))
-            .addAction(new NotificationCompat.Action(
-                    R.drawable.ic_check,
-                    message.data().get("buttonLabel"),
-                    buttonPendingIntent
-            ))
-            .build();
-
-    NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-    notificationManager.notify(message.id().hashCode(), notification);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        notificationManager.notify(msg.id().hashCode(), notification);
 }
 ```
 

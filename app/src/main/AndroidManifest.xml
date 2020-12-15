@@ -5,6 +5,7 @@
         android:name="${applicationId}.permission.CATAPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:name=".CataPushDemo"
 
