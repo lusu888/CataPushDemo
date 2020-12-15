@@ -137,7 +137,7 @@ The "automatic" SDK notifications use this thumbnail as "LargeIcon" for the Andr
 
 Result:
 
-![image.png](file:///C:\Users\ZWX324~1\AppData\Local\Temp\msohtmlclip1\01\clip_image004.gif)
+![avatar](clip_image004.gif)
 
  
 
@@ -186,6 +186,6 @@ public void onMessageReceived(@NonNull CatapushMessage message, @NonNull Context
 
 Result:
 
-![image.png](file:///C:\Users\ZWX324~1\AppData\Local\Temp\msohtmlclip1\01\clip_image006.gif)
+![avatar](clip_image006.gif)
 
  
