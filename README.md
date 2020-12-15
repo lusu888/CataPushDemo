@@ -68,7 +68,7 @@ curl --request POST \
         "recipients":[{"identifier":"johndoe"}]
      }'
   
- ```
+```
 (you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
 
  
@@ -114,7 +114,9 @@ public void onMessageReceived(@NonNull CatapushMessage message, @NonNull Context
 
 This will be the result:
 
-![image.png](file:///C:\Users\ZWX324~1\AppData\Local\Temp\msohtmlclip1\01\clip_image002.gif)
+![avatar](clip_image002.gif)
+
+
 
 
 ## **Notification with image attachment example**
