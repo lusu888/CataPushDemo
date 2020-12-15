@@ -32,5 +32,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MyApp", "Catapush can't be started: " + throwable.getMessage());
                     }
                 });
+        Catapush.getInstance().pauseNotifications();
     }
 }

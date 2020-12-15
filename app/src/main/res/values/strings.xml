@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CataPushDemo</string>
     <string name="catapush_notification_channel_name">zzChannel</string>
+    <string name="catapush_notification_channel_id">it.hw.catapushdemo.zzChannel</string>
 </resources>

@@ -56,12 +56,13 @@ public class CataPushDemo extends MultiDexApplication {
         });
     }
 
-    private static final String NOTIFICATION_CHANNEL_ID = "your.app.package.CHANNEL_ID";
+
 
     @Override
     public void onCreate() {
-        super.onCreate();
 
+        super.onCreate();
+        String NOTIFICATION_CHANNEL_ID = getResources().getString(R.string.catapush_notification_channel_id);
         setupRxErrorHandler(); // Required: see section 'RxJava catch-all error handler' for the implementation
 
         // This is the Android system notification channel that will be used by the Catapush SDK

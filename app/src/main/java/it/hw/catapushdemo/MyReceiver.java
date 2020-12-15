@@ -1,9 +1,14 @@
 package it.hw.catapushdemo;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import com.catapush.library.CatapushTwoWayReceiver;
 import com.catapush.library.exceptions.CatapushAuthenticationError;
@@ -20,6 +25,26 @@ public class MyReceiver extends CatapushTwoWayReceiver {
     @Override
     public void onMessageReceived(@NonNull CatapushMessage msg, @NonNull Context context) {
         Log.d("MyApp", "Received Message: " + msg.toString());
+
+        Intent buttonIntent = new Intent(msg.data().get("buttonAction"));
+        PendingIntent buttonPendingIntent = PendingIntent
+                .getActivity(context, 0, buttonIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        Notification notification = new NotificationCompat.Builder(context, context.getResources().getString(R.string.catapush_notification_channel_id))
+                .setSmallIcon(R.drawable.ic_stat_notify_default)
+                .setContentTitle("Notification button example")
+                .setContentText(msg.previewText())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(msg.body()))
+                .addAction(new NotificationCompat.Action(
+                        R.drawable.upsdk_third_download_bg,
+                        msg.data().get("buttonLabel"),
+                        buttonPendingIntent
+                ))
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        notificationManager.notify(msg.id().hashCode(), notification);
+
     }
 
     @Override
