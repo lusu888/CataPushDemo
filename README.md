@@ -58,7 +58,15 @@ curl --request POST \
    --header 'accept: application/json' \
    --header 'authorization: Bearer ACCESS_TOKEN' \
    --header 'content-type: application/json' \
-   --data '{"mobileAppId":0,"text":"action test", "optionalData": {"buttonLabel": "Tap me", "buttonAction": "com.example.app.INTENT_ACTION_NOTIFICATION_BUTTON"},"recipients":[{"identifier":"johndoe"}]}'
+   --data '{
+       "mobileAppId":0,
+       "text":"action test",
+       "optionalData": {
+            "buttonLabel": "Tap me", 
+            "buttonAction": "com.example.app.INTENT_ACTION_NOTIFICATION_BUTTON"
+        },
+        "recipients":[{"identifier":"johndoe"}]
+     }'
   
  ```
 (you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
@@ -108,9 +116,6 @@ This will be the result:
 
 ![image.png](file:///C:\Users\ZWX324~1\AppData\Local\Temp\msohtmlclip1\01\clip_image002.gif)
 
- 
-
- 
 
 ## **Notification with image attachment example**
 
