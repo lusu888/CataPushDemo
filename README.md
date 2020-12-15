@@ -53,70 +53,56 @@ The Catapush APIs and the client Catapush Android SDK "automatic" notifications 
 
  
 
-Send a message with this **optionalData** field value using the Catapush messages API:
++ Send a message with this **optionalData** field value using the Catapush messages API:
 
-curl --request POST \
- --url https://[api.catapush.com/1/messages](http://api.catapush.com/1/messages) \
- --header 'accept: application/json' \
- --header 'authorization: Bearer ACCESS_TOKEN' \
- --header 'content-type: application/json' \
- --data '{"mobileAppId":0,"text":"action test", "optionalData": {"buttonLabel": "Tap me", "buttonAction": "com.example.app.INTENT_ACTION_NOTIFICATION_BUTTON"},"recipients":[{"identifier":"johndoe"}]}'
+  ````bash
+  curl --request POST \
+   --url https://api.catapush.com/1/messages \
+   --header 'accept: application/json' \
+   --header 'authorization: Bearer ACCESS_TOKEN' \
+   --header 'content-type: application/json' \
+   --data '{"mobileAppId":0,"text":"action test", "optionalData": {"buttonLabel": "Tap me", "buttonAction": "com.example.app.INTENT_ACTION_NOTIFICATION_BUTTON"},"recipients":[{"identifier":"johndoe"}]}'
+  
+  ````
 
-(you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
+  (you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
 
  
 
 Then, in your test app, add this code to the Application.onCreate(...) callback after you have initialized the Catapush instance to temporarily disable the "automatic" notifications:
 
-```
+```java
 Catapush.getInstance().init(...);
-
 Catapush.getInstance().pauseNotifications();
 ```
 
 And in your CatapushReceive.onMessageReceived(...) callback, add the following code to show the notification to the user:
 
-```
+```java
 @Override
 
 public void onMessageReceived(@NonNull CatapushMessage message, @NonNull Context context) {
-
     Intent buttonIntent = new Intent(message.data().get("buttonAction"));
 
     PendingIntent buttonPendingIntent = PendingIntent
-
             .getActivity(context, 0, buttonIntent, PendingIntent.FLAG_ONE_SHOT);
 
 
 
     Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_ID)
-
             .setSmallIcon(R.drawable.ic_stat_notify_default)
-
             .setContentTitle("Notification button example")
-
             .setContentText(message.previewText())
-
             .setStyle(new NotificationCompat.BigTextStyle().bigText(message.body()))
-
             .addAction(new NotificationCompat.Action(
-
                     R.drawable.ic_check,
-
                     message.data().get("buttonLabel"),
-
                     buttonPendingIntent
-
             ))
-
             .build();
 
-
-
     NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-
     notificationManager.notify(message.id().hashCode(), notification);
-
 }
 ```
 
@@ -132,25 +118,17 @@ This will be the result:
 
 **Notification with image attachment example**
 
- 
-
-The Catapush APIs lets the customer send images as attachments to their messages.
-
-When an image is attached to a message, our backend automatically generates a thumbnail that gets delivered to the client SDK in the message itself.
-
- 
+The Catapush APIs lets the customer send images as attachments to their messages.When an image is attached to a message, our backend automatically generates a thumbnail that gets delivered to the client SDK in the message itself.
 
 To send a message with an attachment use the Catapush messages API:
 
+```bash
 curl --header 'authorization: Bearer ACCESS_TOKEN' \
- --url https://[api.catapush.com/1/messages](http://api.catapush.com/1/messages) \
+ --url https://api.catapush.com/1/messages \
  -F 'metadata={"mobileAppId":0,"text":"image attachment test","recipients":[{"identifier":"johndoe"}]}' -F 'file=@attachment.jpg' 
+```
 
 (you can [login here](https://www.catapush.com/quickstarts/how-to-send-a-message) to obtain the ACCESS_TOKEN and the mobileAppId values, then change the recipients identifier accordingly)
-
- 
-
- 
 
 The "automatic" SDK notifications use this thumbnail as "LargeIcon" for the Android notification if the user has not disabled this feature (see NotificationTemplate.Builder.useAttachmentPreviewAsLargeIcon(boolean)).
 
@@ -162,61 +140,38 @@ Result:
 
 If the customer opts for the "manual" notification then he can retrieve the high resolution image from our backend and use it with the Android Notification.BigPictureStyle class.
 
- 
-
 First of all add this code to the Application.onCreate(...) callback after you have initialized the Catapush instance to temporarily disable the "automatic" notifications:
 
-```
+```java
 Catapush.getInstance().init(...);
-
 Catapush.getInstance().pauseNotifications();
 ```
 
 And in your CatapushReceive.onMessageReceived(...) callback, add the following code to show the picture notification to the user:
 
-```
+```java
 @Override
 
 public void onMessageReceived(@NonNull CatapushMessage message, @NonNull Context context) {
-
     Glide.with(context)
-
             .asBitmap()
-
             .load(message.file().remoteUri())
-
             .into(new CustomTarget<Bitmap>() {
-
                 @Override
-
                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-
                     Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_ID)
-
                             .setSmallIcon(R.drawable.ic_stat_notify_default)
-
                             .setContentTitle("Notification image example")
-
                             .setContentText(message.previewText())
-
                             .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(resource))
-
                             .build();
 
-
-
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-
                     notificationManager.notify(message.id().hashCode(), notification);
-
                 }
-
-
-
+                
                 @Override
-
                 public void onLoadCleared(@Nullable Drawable placeholder) {}
-
             });
 
 }
